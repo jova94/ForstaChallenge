@@ -33,6 +33,61 @@ public class QuizzesControllerTest
     }
 
     [Fact]
+    public async Task PostNewQuizWithTwoQuestionsAndAnswersRetursAnswers()
+    {
+        //Arrange
+        var quiz = new QuizCreateModel("Test title2");
+        var question = new QuestionCreateModel("question");
+        var question2 = new QuestionCreateModel("question2");
+        var answer = new AnswerCreateModel("answer");
+        var answer2 = new AnswerCreateModel("answer1");
+        using (var testHost = new TestServer(new WebHostBuilder()
+                   .UseStartup<Startup>()))
+        {
+            var client = testHost.CreateClient();
+            var content = new StringContent(JsonConvert.SerializeObject(quiz));
+            var questionContent = new StringContent(JsonConvert.SerializeObject(question));
+            var question2Content = new StringContent(JsonConvert.SerializeObject(question2));
+            var answerContent = new StringContent(JsonConvert.SerializeObject(answer));
+            var answer2Content = new StringContent(JsonConvert.SerializeObject(answer2));
+
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            questionContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            question2Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            answerContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            answer2Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            //Act
+            var response = await client.PostAsync(new Uri(testHost.BaseAddress, $"{QuizApiEndPoint}"),
+                content);
+            var questionResponse = await client.PostAsync(new Uri(testHost.BaseAddress, $"{response.Headers.Location}/questions"),
+                questionContent);
+            var question2Response = await client.PostAsync(new Uri(testHost.BaseAddress, $"{response.Headers.Location}/questions"),
+                question2Content);
+            var answerResponse = await client.PostAsync(new Uri(testHost.BaseAddress, $"{questionResponse.Headers.Location}/answers"),
+                                                                                     answerContent);
+            var answer2Response = await client.PostAsync(new Uri(testHost.BaseAddress, $"{question2Response.Headers.Location}/answers"),
+                                                                                      answer2Content);
+
+            var countOfAnswers = answerResponse.StatusCode == HttpStatusCode.Created && answerResponse.Headers.Location != null ? 1 : 0;
+            countOfAnswers = answer2Response.StatusCode == HttpStatusCode.Created && answer2Response.Headers.Location != null ? countOfAnswers + 1 : countOfAnswers;
+            //Assert
+            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Created, questionResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.Created, question2Response.StatusCode);
+            Assert.Equal(HttpStatusCode.Created, answerResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.Created, answer2Response.StatusCode);
+            Assert.Equal(2, countOfAnswers);
+
+            Assert.NotNull(response.Headers.Location);
+            Assert.NotNull(questionResponse.Headers.Location);
+            Assert.NotNull(question2Response.Headers.Location);
+            Assert.NotNull(answerResponse.Headers.Location);
+            Assert.NotNull(answer2Response.Headers.Location);
+        }
+    }
+
+    [Fact]
     public async Task AQuizExistGetReturnsQuiz()
     {
         using (var testHost = new TestServer(new WebHostBuilder()
