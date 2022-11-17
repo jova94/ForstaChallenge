@@ -1,5 +1,6 @@
 namespace QuizService.Model.Domain;
 
+//TODO: Move all the models to DAL 
 public class Answer
 {
     public int Id { get; set; }

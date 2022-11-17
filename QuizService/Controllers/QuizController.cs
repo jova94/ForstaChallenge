@@ -45,6 +45,7 @@ public class QuizController : Controller
 
     // POST api/quizzes
     [HttpPost]
+    //Use DTO models for requests
     public IActionResult Post([FromBody]QuizCreateModel value)
     {
         //TODO: Do all the data related things in DAL layer
@@ -106,6 +107,7 @@ public class QuizController : Controller
     // DELETE api/quizzes/5/questions/6
     [HttpDelete]
     [Route("{id}/questions/{qid}")]
+    //TODO: Remove unused id
     public IActionResult DeleteQuestion(int id, int qid)
     {
         const string sql = "DELETE FROM Question WHERE Id = @QuestionId";

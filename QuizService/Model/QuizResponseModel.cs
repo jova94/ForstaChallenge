@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 namespace QuizService.Model;
 
+//TODO: Move response models to response models folder
 public class QuizResponseModel
 {
     public class AnswerItem

@@ -28,6 +28,7 @@ namespace QuizService.Dai
 
         public QuizResponse? GetQuizById(int id)
         {
+            //TODO: Use automapper
             const string quizSql = "SELECT * FROM Quiz WHERE Id = @Id;";
             var quiz = _connection.Query<QuizModel>(quizSql, new { Id = id }).FirstOrDefault();
             if (quiz == null)
