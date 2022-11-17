@@ -15,5 +15,10 @@ namespace QuizService.Service
         {
             return _repo.GetQuizzes().ToList();
         }
+
+        public QuizResponse? GetQuizById(int id)
+        {
+            return _repo.GetQuizById(id);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -31,6 +32,7 @@ public class Startup
         services.AddControllers();
         services.AddScoped<IQuizRepository, QuizRepository>();
         services.AddScoped<IQuizService, QuizServiceService>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

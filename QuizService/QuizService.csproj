@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.2" />
@@ -16,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QuizService.Application\QuizService.Dai.csproj" />
+    <ProjectReference Include="..\QuizService.Application\QuizService.Dal.csproj" />
     <ProjectReference Include="..\QuizService.Domain\QuizService.Domain.csproj" />
     <ProjectReference Include="..\QuizService.Service\QuizService.Service.csproj" />
   </ItemGroup>

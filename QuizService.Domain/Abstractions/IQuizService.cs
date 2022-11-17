@@ -11,5 +11,6 @@ namespace QuizService.Domain.Abstractions
     public interface IQuizService
     {
         List<QuizResponse> GetAllQuizzes();
+        QuizResponse? GetQuizById(int id);
     }
 }

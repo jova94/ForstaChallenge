@@ -11,5 +11,6 @@ namespace QuizService.Domain.Abstractions
     public interface IQuizRepository
     {
         QuizResponse[] GetQuizzes();
+        QuizResponse? GetQuizById(int id);
     }
 }

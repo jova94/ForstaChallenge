@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizClient", "QuizClient\Qu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizClient.Tests", "QuizClient.Tests\QuizClient.Tests.csproj", "{A1746465-9494-46CC-AB14-EB6AB15F446D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizService.Dai", "QuizService.Application\QuizService.Dai.csproj", "{EF2351D5-78F5-4084-9E4C-81CB27552227}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizService.Dal", "QuizService.Application\QuizService.Dal.csproj", "{EF2351D5-78F5-4084-9E4C-81CB27552227}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2561DC21-AFE2-46BE-993E-E44C30ED17E2}"
 EndProject
@@ -19,9 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1DBA8ED0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{7554BFEB-2453-4997-A30E-E09BCD508C56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizService.Domain", "QuizService.Domain\QuizService.Domain.csproj", "{39CAF20C-6F77-46FA-A8E2-2CD0DB92480D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizService.Domain", "QuizService.Domain\QuizService.Domain.csproj", "{39CAF20C-6F77-46FA-A8E2-2CD0DB92480D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizService.Service", "QuizService.Service\QuizService.Service.csproj", "{38A75F14-043A-4966-9154-BBE75AC6C2A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizService.Service", "QuizService.Service\QuizService.Service.csproj", "{38A75F14-043A-4966-9154-BBE75AC6C2A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
