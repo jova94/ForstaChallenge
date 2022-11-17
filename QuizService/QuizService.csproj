@@ -15,4 +15,10 @@
     <EmbeddedResource Include="Migrations\*.sql" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\QuizService.Application\QuizService.Dai.csproj" />
+    <ProjectReference Include="..\QuizService.Domain\QuizService.Domain.csproj" />
+    <ProjectReference Include="..\QuizService.Service\QuizService.Service.csproj" />
+  </ItemGroup>
+
 </Project>

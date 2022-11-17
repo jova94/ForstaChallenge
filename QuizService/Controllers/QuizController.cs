@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using QuizService.Model;
 using QuizService.Model.Domain;
 using System.Linq;
+using QuizService.Domain.Abstractions;
+using QuizService.Domain.Resonses;
 
 namespace QuizService.Controllers;
 
@@ -12,24 +14,19 @@ namespace QuizService.Controllers;
 public class QuizController : Controller
 {
     private readonly IDbConnection _connection;
+    private readonly IQuizService _service;
 
-    public QuizController(IDbConnection connection)
+    public QuizController(IDbConnection connection, IQuizService service)
     {
         _connection = connection;
+        _service = service;
     }
 
     // GET api/quizzes
     [HttpGet]
-    public IEnumerable<QuizResponseModel> Get()
+    public IEnumerable<QuizResponse> Get()
     {
-        const string sql = "SELECT * FROM Quiz;";
-        var quizzes = _connection.Query<Quiz>(sql);
-        return quizzes.Select(quiz =>
-            new QuizResponseModel
-            {
-                Id = quiz.Id,
-                Title = quiz.Title
-            });
+        return _service.GetAllQuizzes();
     }
 
     // GET api/quizzes/5
@@ -37,7 +34,7 @@ public class QuizController : Controller
     public object Get(int id)
     {
         const string quizSql = "SELECT * FROM Quiz WHERE Id = @Id;";
-        var quiz = _connection.QuerySingle<Quiz>(quizSql, new {Id = id});
+        var quiz = _connection.Query<Quiz>(quizSql, new {Id = id}).FirstOrDefault();
         if (quiz == null)
             return NotFound();
         const string questionsSql = "SELECT * FROM Question WHERE QuizId = @QuizId;";
@@ -111,8 +108,14 @@ public class QuizController : Controller
     [Route("{id}/questions")]
     public IActionResult PostQuestion(int id, [FromBody]QuestionCreateModel value)
     {
+        const string quizSql = "SELECT * FROM quiz WHERE Id = @Id;";
+        var quiz = _connection.Query<Quiz>(quizSql, new { Id = id });
+        if (!quiz.Any())
+        {
+            return NotFound();
+        }
         const string sql = "INSERT INTO Question (Text, QuizId) VALUES(@Text, @QuizId); SELECT LAST_INSERT_ROWID();";
-        var questionId = _connection.ExecuteScalar(sql, new {Text = value.Text, QuizId = id});
+        var questionId = _connection.ExecuteScalar(sql, new { Text = value.Text, QuizId = id });
         return Created($"/api/quizzes/{id}/questions/{questionId}", null);
     }
 
